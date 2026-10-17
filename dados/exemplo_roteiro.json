@@ -1,0 +1,24 @@
+{
+  "versao_formato": 1,
+  "nome": "Exemplo: ponte da nave",
+  "personagens": [
+    { "id": "gabura", "nome": "Gabura", "cor": "#8fd651" },
+    { "id": "metalgabutron", "nome": "MetalgabuTRON", "cor": "#b9c2c8" }
+  ],
+  "falas": [
+    {
+      "id": "ponte_gabura_001",
+      "personagem": "gabura",
+      "texto": "Hum... acho que a última vez que vi foi antes do almoço.",
+      "emocao": "pensativo",
+      "dica": "Coçando a cabeça, meio perdido.",
+      "marcante": true
+    },
+    {
+      "id": "ponte_metalgabutron_001",
+      "personagem": "metalgabutron",
+      "texto": "Calculando... 99% de chance de estar embaixo da caixa de pizza.",
+      "emocao": "sarcastico"
+    }
+  ]
+}

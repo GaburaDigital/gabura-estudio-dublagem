@@ -1,0 +1,26 @@
+{
+  "name": "gabura-estudio-dublagem",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Estúdio de dublagem do Gaburaverso: grava vozes, aplica efeitos por personagem e exporta para o jogo.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:arquivo": "tsc --noEmit && vite build --mode arquivo",
+    "preview": "vite preview",
+    "qrcode": "node testes/gerar_qrcode.mjs"
+  },
+  "dependencies": {
+    "@fontsource/baloo-2": "5.1.1",
+    "@fontsource/nunito": "5.1.1",
+    "fflate": "0.8.2"
+  },
+  "devDependencies": {
+    "qrcode": "1.5.4",
+    "typescript": "5.7.3",
+    "vite": "6.0.7",
+    "vite-plugin-singlefile": "2.1.0"
+  }
+}
