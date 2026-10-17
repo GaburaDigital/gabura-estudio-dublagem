@@ -15,7 +15,7 @@ import { projetoNave } from './dados/roteiro_nave';
 import {
   alternarGravacao, apagarTomada, aoVivo, gravador, ligarMicrofone, marcarFavorita, tomadaEmFoco,
 } from './interface/acoes';
-import { abrirJanela, avisar } from './interface/dialogos';
+import { abrirJanela, avisar, confirmar } from './interface/dialogos';
 import { h } from './interface/dom';
 import { aoMudar, estado, fala, mudou, projeto, redesenhar, type Aba } from './interface/estado';
 import { cancelarKaraoke, karaokeEmAndamento, marcarPalavra, ouvirComEfeito, ouvirLimpo } from './interface/painel_fala';
@@ -71,6 +71,9 @@ async function abrirAjustes(): Promise<void> {
     h('label', { class: 'check', for: 'aj-contagem' }, contagem, 'Contagem 3, 2, 1 antes de gravar'),
     h('label', { class: 'rotulo', for: 'aj-legenda' }, 'Legenda no jogo'), legenda,
     h('p', { class: 'nota' }, 'No modo karaokê, a aba Gravar ganha o botão "Marcar palavras": você ouve a fala e toca K no começo de cada palavra.'),
+    __ARQUIVO_UNICO__ ? null : h('div', { class: 'linha-bts' },
+      h('button', { class: 'bt', type: 'button', onclick: () => { j.fechar(); void procurarAtualizacao(); } }, 'Procurar atualização'),
+      h('button', { class: 'bt', type: 'button', onclick: () => { j.fechar(); void limparCacheDoApp(); } }, 'Limpar cache do app')),
     h('div', { class: 'modal-bts' }, fechar, salvar));
   const j = abrirJanela(form);
   fechar.onclick = () => j.fechar();
@@ -113,7 +116,10 @@ function desenhar(): void {
   const focoId = (document.activeElement as HTMLElement | null)?.id;
   const tela = estado.aba === 'vozes' ? telaVozes() : estado.aba === 'gravar' ? telaGravar() : telaExportar();
   app.replaceChildren(cabecalho(), h('main', { class: 'conteudo' }, tela),
-    h('footer', { class: 'rodape' }, offlineTexto(), ' · ', atalhosTexto()));
+    h('footer', { class: 'rodape' },
+      h('span', {}, `versão de ${__VERSAO_APP__} · `, offlineTexto(), ' · '),
+      __ARQUIVO_UNICO__ ? null : h('button', { class: 'bt mini', type: 'button', onclick: () => void procurarAtualizacao() }, 'Procurar atualização'),
+      h('p', {}, atalhosTexto())));
   if (focoId) document.getElementById(focoId)?.focus();
   window.scrollTo(0, rolagem);
 }
@@ -179,14 +185,44 @@ document.addEventListener('keyup', (e) => {
   if (e.key === ' ' && (e.target as HTMLElement).tagName === 'BUTTON' && !(e.target as HTMLElement).closest('.modal')) e.preventDefault();
 });
 
-// ---------- modo offline (service worker) ----------
+// ---------- modo offline (service worker) e atualizações ----------
+let registro: ServiceWorkerRegistration | null = null;
 if (import.meta.env.PROD && !__ARQUIVO_UNICO__ && 'serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js').then(async (reg) => {
+    registro = reg;
     await navigator.serviceWorker.ready;
     estadoOffline = 'pronto para usar sem internet';
-    reg.addEventListener('updatefound', () => { estadoOffline = 'versão nova baixada: recarregue a página para usar'; desenhar(); });
+    reg.addEventListener('updatefound', () => { estadoOffline = 'baixando versão nova…'; desenhar(); });
     desenhar();
   }).catch(() => { estadoOffline = 'modo offline indisponível'; desenhar(); });
+  // quando a versão nova assume, recarrega uma vez (as gravações ficam guardadas no navegador)
+  let recarregou = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (recarregou || estado.gravandoFala) return;
+    recarregou = true;
+    location.reload();
+  });
+}
+
+/** Pergunta ao servidor se há versão nova; se houver, ela é baixada e a página recarrega sozinha. */
+async function procurarAtualizacao(): Promise<void> {
+  if (!registro) { location.reload(); return; }
+  avisar('Procurando atualização…', 'info');
+  try {
+    await registro.update();
+    const nova = registro.installing ?? registro.waiting;
+    if (nova) { nova.postMessage('pular-espera'); avisar('Versão nova encontrada. Recarregando…', 'ok'); }
+    else avisar('Você já está na versão mais nova.', 'ok');
+  } catch { avisar('Sem internet agora: continue usando a versão guardada.', 'erro'); }
+}
+
+/** Apaga só a cópia do app guardada para uso offline. Projetos, gravações e presets NÃO são apagados. */
+export async function limparCacheDoApp(): Promise<void> {
+  const ok = await confirmar('Limpar o cache do app?', 'O estúdio será baixado de novo da internet. Seus projetos, gravações e presets continuam guardados neste computador.', 'Limpar e recarregar', false);
+  if (!ok) return;
+  for (const r of await navigator.serviceWorker?.getRegistrations?.() ?? []) await r.unregister();
+  for (const n of await caches.keys()) await caches.delete(n);
+  location.reload();
 }
 
 // ---------- início ----------

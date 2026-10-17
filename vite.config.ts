@@ -37,7 +37,11 @@ export default defineConfig(({ mode }) => {
   const arquivoUnico = mode === 'arquivo';
   return {
     base: arquivoUnico ? './' : '/gabura-estudio-dublagem/',
-    define: { __ARQUIVO_UNICO__: JSON.stringify(arquivoUnico) },
+    define: {
+      __ARQUIVO_UNICO__: JSON.stringify(arquivoUnico),
+      // data da compilação, mostrada no rodapé para saber qual versão está aberta
+      __VERSAO_APP__: JSON.stringify(new Date().toLocaleString('pt-BR', { timeZone: 'America/Fortaleza', dateStyle: 'short', timeStyle: 'short' })),
+    },
     plugins: arquivoUnico ? [viteSingleFile()] : [listaOffline()],
     build: {
       outDir: arquivoUnico ? 'dist_arquivo' : 'dist',

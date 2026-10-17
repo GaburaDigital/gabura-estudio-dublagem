@@ -181,3 +181,6 @@ details summary { cursor: pointer; color: var(--texto-2); font-weight: 700; }
 .caixa > .bt, .caixa > .linha-bts { justify-self: start; }
 .op { grid-template-rows: auto 1fr auto; }
 .grupo { align-content: start; }
+
+.rodape { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.rodape p { flex-basis: 100%; margin: 0; }
