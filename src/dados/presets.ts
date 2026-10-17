@@ -11,6 +11,11 @@ export const SUGERIDOS: Record<string, Preset[]> = {
     { id: 'gabura_radio', nome: 'Rádio do relógio', descricao: 'filtro de rádio leve, como se viesse do pulso', p: voz({ limpeza: 0.5, radio: 0.45, agudo: 1 }) },
     { id: 'gabura_holograma', nome: 'Holograma', descricao: 'natural com eco curto e brilho leve', p: voz({ limpeza: 0.5, eco: 0.18, ecoTempo: 0.07, ecoRepeticoes: 0.25, sala: 0.12, salaTamanho: 0.25, agudo: 3 }) },
   ],
+  gaburia: [
+    { id: 'gaburia_relogio', nome: 'Rádio do relógio', descricao: 'voz saindo de um alto-falante pequeno no pulso', p: voz({ tom: 1, radio: 0.5, agudo: 1, limpeza: 0.5 }) },
+    { id: 'gaburia_assistente', nome: 'Assistente digital', descricao: 'rádio leve com um toque de robô, como uma IA', p: voz({ tom: 1.5, formante: 1, radio: 0.3, roboFreq: 220, roboMistura: 0.15, agudo: 2, limpeza: 0.5 }) },
+    { id: 'gaburia_holograma', nome: 'Holograma', descricao: 'eco curto e brilho, parece vir de dentro do relógio', p: voz({ tom: 1, eco: 0.2, ecoTempo: 0.06, ecoRepeticoes: 0.25, sala: 0.12, salaTamanho: 0.2, agudo: 3, limpeza: 0.5 }) },
+  ],
   metalgabutron: [
     { id: 'metal_robo', nome: 'Robô clássico', descricao: 'modulação em anel de 50 Hz e tom −2', p: voz({ tom: -2, roboFreq: 50, roboMistura: 0.7, agudo: 3, limpeza: 0.5 }) },
     { id: 'metal_lata', nome: 'Lata de sardinha', descricao: 'eco metálico bem curto e médios fortes', p: voz({ tom: -1, eco: 0.55, ecoTempo: 0.02, ecoRepeticoes: 0.7, medio: 5, radio: 0.3, limpeza: 0.5 }) },

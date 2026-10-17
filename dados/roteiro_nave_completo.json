@@ -1,0 +1,549 @@
+{
+  "versao_formato": 1,
+  "nome": "Nave do Gaburaverso — jogo completo",
+  "local": "sala",
+  "personagens": [
+    {
+      "id": "gaburia",
+      "nome": "Gabu_IA",
+      "cor": "#4fd6d0",
+      "sugeridos": [
+        {
+          "id": "gaburia_relogio",
+          "nome": "Rádio do relógio",
+          "descricao": "voz saindo de um alto-falante pequeno no pulso",
+          "p": {
+            "tom": 1,
+            "radio": 0.5,
+            "agudo": 1,
+            "limpeza": 0.5
+          }
+        },
+        {
+          "id": "gaburia_assistente",
+          "nome": "Assistente digital",
+          "descricao": "rádio leve com um toque de robô, como uma IA",
+          "p": {
+            "tom": 1.5,
+            "formante": 1,
+            "radio": 0.3,
+            "roboFreq": 220,
+            "roboMistura": 0.15,
+            "agudo": 2,
+            "limpeza": 0.5
+          }
+        },
+        {
+          "id": "gaburia_holograma",
+          "nome": "Holograma",
+          "descricao": "eco curto e brilho, parece vir de dentro do relógio",
+          "p": {
+            "tom": 1,
+            "eco": 0.2,
+            "ecoTempo": 0.06,
+            "ecoRepeticoes": 0.25,
+            "sala": 0.12,
+            "salaTamanho": 0.2,
+            "agudo": 3,
+            "limpeza": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "gabura",
+      "nome": "Gabura",
+      "cor": "#8fd651",
+      "voz": {
+        "origem": "gabura_natural",
+        "nome": "Natural de estúdio",
+        "p": {
+          "grave": 1.5,
+          "agudo": 1.5,
+          "limpeza": 0.5
+        }
+      }
+    },
+    {
+      "id": "gabura_gato",
+      "nome": "Gabura gato",
+      "cor": "#ffd166",
+      "voz": {
+        "origem": "gato_malandro",
+        "nome": "Gato malandro",
+        "p": {
+          "tom": 3,
+          "formante": 2,
+          "rouquidao": 0.25,
+          "limpeza": 0.5
+        }
+      }
+    },
+    {
+      "id": "metalgabutron",
+      "nome": "MetalgabuTRON",
+      "cor": "#b9c2c8",
+      "voz": {
+        "origem": "metal_robo",
+        "nome": "Robô clássico",
+        "p": {
+          "tom": -2,
+          "formante": 0.5,
+          "roboFreq": 68,
+          "roboMistura": 0.2,
+          "vocoderNota": 36,
+          "agudo": -2.5,
+          "limpeza": 0.5
+        }
+      }
+    }
+  ],
+  "falas": [
+    {
+      "id": "sala_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Olá, visitante! Que bom que você veio ajudar.",
+      "dica": "Animada, como quem atende uma ligação esperada"
+    },
+    {
+      "id": "sala_gaburia_002",
+      "personagem": "gaburia",
+      "texto": "Depois do último salto interdimensional, a nave ficou presa entre dimensões...",
+      "dica": "Séria, baixando a voz no fim"
+    },
+    {
+      "id": "sala_gaburia_003",
+      "personagem": "gaburia",
+      "texto": "NOSSA! Olhe pela janela! Estamos presos no GABURAVERSO!",
+      "dica": "Grito de surpresa"
+    },
+    {
+      "id": "sala_gaburia_004",
+      "personagem": "gaburia",
+      "texto": "Ah, eu sou a Gabu_IA: um backup do Gabura que ficou preso no seu relógio.",
+      "dica": "Orgulhosa",
+      "marcante": true
+    },
+    {
+      "id": "sala_gaburia_005",
+      "personagem": "gaburia",
+      "texto": "Longa história. Envolve um Ctrl+C... e nenhum Ctrl+V.",
+      "dica": "Envergonhada, rápido"
+    },
+    {
+      "id": "sala_gaburia_006",
+      "personagem": "gaburia",
+      "texto": "Rodei um diagnóstico: três sistemas precisam de manutenção. Navegação, treinamento e energia.",
+      "dica": "Tom de relatório"
+    },
+    {
+      "id": "sala_gaburia_007",
+      "personagem": "gaburia",
+      "texto": "Vou te chamar de companheiro. Combinado?",
+      "dica": "Simpática"
+    },
+    {
+      "id": "sala_gaburia_008",
+      "personagem": "gaburia",
+      "texto": "...Não precisa responder. Eu sou um relógio, não tenho ouvidos.",
+      "dica": "Seca, engraçada"
+    },
+    {
+      "id": "sala_gaburia_009",
+      "personagem": "gaburia",
+      "texto": "Para andar, use o joystick esquerdo. Para virar, o direito.",
+      "dica": "Clara e devagar"
+    },
+    {
+      "id": "sala_gaburia_010",
+      "personagem": "gaburia",
+      "texto": "Isso! Agora você tem pernas virtuais. Use com responsabilidade."
+    },
+    {
+      "id": "sala_gaburia_011",
+      "personagem": "gaburia",
+      "texto": "Para pegar algo, aproxime a mão e aperte o botão do lado do controle.",
+      "dica": "Clara e devagar"
+    },
+    {
+      "id": "sala_gaburia_012",
+      "personagem": "gaburia",
+      "texto": "Tudo que brilha em verde-limão dá para usar. O resto é decoração... ou bagunça do Gabura."
+    },
+    {
+      "id": "sala_gaburia_017",
+      "personagem": "gaburia",
+      "texto": "Caixas de teste! Pode empurrar, jogar, empilhar... Só não jogue em mim.",
+      "dica": "Brincalhona; toca uma vez só"
+    },
+    {
+      "id": "sala_gaburia_018",
+      "personagem": "gaburia",
+      "texto": "Uma torre de três caixas! Você ganhou... nada. Mas ficou bonito.",
+      "dica": "Fingindo cerimônia"
+    },
+    {
+      "id": "sala_gaburia_013",
+      "personagem": "gaburia",
+      "texto": "Quando quiser falar comigo, levante o pulso, como quem olha as horas."
+    },
+    {
+      "id": "sala_gaburia_014",
+      "personagem": "gaburia",
+      "texto": "Oi! Viu? É fácil. Eu apareço sempre que você precisar."
+    },
+    {
+      "id": "sala_gaburia_015",
+      "personagem": "gaburia",
+      "texto": "As faixas no chão levam a cada sala. Pode escolher a ordem. Eu não julgo. Muito.",
+      "dica": "Pausa antes de \"Muito\""
+    },
+    {
+      "id": "sala_gaburia_016",
+      "personagem": "gaburia",
+      "texto": "Este painel mostra os três sistemas. Quando as três luzes acenderem, o portal abre."
+    },
+    {
+      "id": "ponte_gabura_001",
+      "personagem": "gabura",
+      "texto": "Companheiro! Precisamos encontrar as coordenadas no sistema de navegação.",
+      "dica": "Aliviado, empolgado"
+    },
+    {
+      "id": "ponte_gabura_002",
+      "personagem": "gabura",
+      "texto": "Você precisa conectar o cyberdeck no console de navegação e encontrar a coordenada!"
+    },
+    {
+      "id": "ponte_gabura_003",
+      "personagem": "gabura",
+      "texto": "Hum... onde será que eu deixei o cyberdeck mesmo? Acho que a última vez que vi foi na hora do almoço.",
+      "dica": "Coçando a cabeça",
+      "marcante": true
+    },
+    {
+      "id": "ponte_gabura_004",
+      "personagem": "gabura",
+      "texto": "Na hora do almoço eu comi pizza... Será que tem pizza envolvida nisso?",
+      "dica": "Pensativo"
+    },
+    {
+      "id": "ponte_gabura_005",
+      "personagem": "gabura",
+      "texto": "Olha embaixo das caixas de pizza. Juro que é tecnologia, não comida."
+    },
+    {
+      "id": "ponte_gabura_006",
+      "personagem": "gabura",
+      "texto": "Uoww, muito bem, você encontrou! Agora conecte ele!",
+      "dica": "Comemorando"
+    },
+    {
+      "id": "ponte_gabura_007",
+      "personagem": "gabura",
+      "texto": "Resolva esse desafio de lógica para encontrar a coordenada."
+    },
+    {
+      "id": "ponte_gabura_008",
+      "personagem": "gabura",
+      "texto": "Monte o foguete com as sete peças. Elas giram de 45 em 45 graus."
+    },
+    {
+      "id": "ponte_gabura_009",
+      "personagem": "gabura",
+      "texto": "Começa pelos triângulos grandes. Eles são o \"main\" do foguete.",
+      "dica": "Piscadinha na voz"
+    },
+    {
+      "id": "ponte_gabura_010",
+      "personagem": "gabura",
+      "texto": "Muito bem, você conseguiu!"
+    },
+    {
+      "id": "ponte_gabura_011",
+      "personagem": "gabura",
+      "texto": "Coordenada encontrada: setor 42. Claro que era 42.",
+      "dica": "Riso curto no fim"
+    },
+    {
+      "id": "ponte_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Sistema de navegação: online! Uma luz acesa, faltam duas.",
+      "dica": "Tom de notificação"
+    },
+    {
+      "id": "treino_gabura_gato_001",
+      "personagem": "gabura_gato",
+      "texto": "Ah, oi! Não repare na bagunça... nem na máquina de clonagem pegando fogo.",
+      "dica": "Nervoso, fingindo calma"
+    },
+    {
+      "id": "treino_gabura_gato_002",
+      "personagem": "gabura_gato",
+      "texto": "Eu... posso ter apertado o botão. Aquele que diz \"não aperte\".",
+      "dica": "Envergonhado",
+      "marcante": true
+    },
+    {
+      "id": "treino_gabura_gato_003",
+      "personagem": "gabura_gato",
+      "texto": "Em minha defesa, ele era muito grande e muito brilhante.",
+      "dica": "Se defendendo"
+    },
+    {
+      "id": "treino_gabura_gato_004",
+      "personagem": "gabura_gato",
+      "texto": "Agora tem dezesseis clones do Gojo e do Fred escondidos pela sala!"
+    },
+    {
+      "id": "treino_gabura_gato_005",
+      "personagem": "gabura_gato",
+      "texto": "Pegue a arma de captura no suporte e mande todos de volta para a câmara."
+    },
+    {
+      "id": "treino_gabura_gato_006",
+      "personagem": "gabura_gato",
+      "texto": "Isso! Mire só no clone. Se a bolinha tocar no esconderijo, não conta."
+    },
+    {
+      "id": "treino_gabura_gato_007",
+      "personagem": "gabura_gato",
+      "texto": "Um a menos!",
+      "dica": "Comemorando"
+    },
+    {
+      "id": "treino_gabura_gato_008",
+      "personagem": "gabura_gato",
+      "texto": "Direto para a câmara!"
+    },
+    {
+      "id": "treino_gabura_gato_009",
+      "personagem": "gabura_gato",
+      "texto": "Capturado! Ctrl+Z nesse clone!"
+    },
+    {
+      "id": "treino_gabura_gato_010",
+      "personagem": "gabura_gato",
+      "texto": "Ops, acertou a caixa. Ela não fez nada de errado."
+    },
+    {
+      "id": "treino_gabura_gato_011",
+      "personagem": "gabura_gato",
+      "texto": "Quase! Esse se escondeu bem."
+    },
+    {
+      "id": "treino_gabura_gato_012",
+      "personagem": "gabura_gato",
+      "texto": "Metade já foi! A câmara está ficando lotada."
+    },
+    {
+      "id": "treino_gabura_gato_013",
+      "personagem": "gabura_gato",
+      "texto": "Último clone! Esse é teimoso igual ao original."
+    },
+    {
+      "id": "treino_gabura_gato_014",
+      "personagem": "gabura_gato",
+      "texto": "Todos capturados! Prometo nunca mais apertar botões. Hoje.",
+      "dica": "Pausa antes de \"Hoje\""
+    },
+    {
+      "id": "treino_gabura_gato_015",
+      "personagem": "gabura_gato",
+      "texto": "Hora da dança da vitória!",
+      "dica": "Cantado"
+    },
+    {
+      "id": "treino_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Sistema de treinamento: estável! Mais uma luz acesa.",
+      "dica": "Tom de notificação"
+    },
+    {
+      "id": "treino_gaburia_002",
+      "personagem": "gaburia",
+      "texto": "Sério, companheiro? Está escrito \"não aperte\". Ainda bem que eu desliguei a máquina.",
+      "dica": "Decepcionada, mas rindo"
+    },
+    {
+      "id": "oficina_metalgabutron_001",
+      "personagem": "metalgabutron",
+      "texto": "Bip-bop. Visitante detectado. Finalmente alguém com mãos que não são garras.",
+      "dica": "Seco"
+    },
+    {
+      "id": "oficina_metalgabutron_002",
+      "personagem": "metalgabutron",
+      "texto": "O motor da nave parou. Para ligar, precisamos acender um LED nesta protoboard."
+    },
+    {
+      "id": "oficina_metalgabutron_003",
+      "personagem": "metalgabutron",
+      "texto": "Sim. Um LED. Para ligar uma nave inteira. Com três volts.",
+      "dica": "Pausas entre as frases"
+    },
+    {
+      "id": "oficina_metalgabutron_004",
+      "personagem": "metalgabutron",
+      "texto": "O cara que fez este jogo deve ser maluco. Bip-bop.",
+      "dica": "Cochichando"
+    },
+    {
+      "id": "oficina_metalgabutron_005",
+      "personagem": "metalgabutron",
+      "texto": "Pise no posto e monte o circuito seguindo o quadro do esquema."
+    },
+    {
+      "id": "oficina_metalgabutron_006",
+      "personagem": "metalgabutron",
+      "texto": "Pilhas, jumper vermelho, resistor, LED e jumper preto. Nessa ordem.",
+      "dica": "Contando nos dedos"
+    },
+    {
+      "id": "oficina_metalgabutron_007",
+      "personagem": "metalgabutron",
+      "texto": "Esse resistor está queimado. Dá para sentir o cheiro daqui. E eu nem tenho nariz."
+    },
+    {
+      "id": "oficina_metalgabutron_008",
+      "personagem": "metalgabutron",
+      "texto": "Esse jumper é curto demais. Não chega nem na esquina da protoboard."
+    },
+    {
+      "id": "oficina_metalgabutron_009",
+      "personagem": "metalgabutron",
+      "texto": "LED ao contrário não acende. Perna longa no positivo.",
+      "dica": "Professor paciente"
+    },
+    {
+      "id": "oficina_metalgabutron_010",
+      "personagem": "metalgabutron",
+      "texto": "É a regra número um da eletrônica. A número dois é não lamber pilha."
+    },
+    {
+      "id": "oficina_metalgabutron_011",
+      "personagem": "metalgabutron",
+      "texto": "Encaixou. Clique satisfatório."
+    },
+    {
+      "id": "oficina_metalgabutron_012",
+      "personagem": "metalgabutron",
+      "texto": "Correto. Estou quase impressionado.",
+      "dica": "Sem emoção"
+    },
+    {
+      "id": "oficina_metalgabutron_013",
+      "personagem": "metalgabutron",
+      "texto": "O LED acendeu! Motor ligando...",
+      "dica": "Surpreso de verdade"
+    },
+    {
+      "id": "oficina_metalgabutron_014",
+      "personagem": "metalgabutron",
+      "texto": "Você ligou uma nave interdimensional com três volts. A física pediu demissão.",
+      "marcante": true
+    },
+    {
+      "id": "oficina_metalgabutron_015",
+      "personagem": "metalgabutron",
+      "texto": "Parabéns, companheiro. E isso não foi sarcasmo.",
+      "dica": "Sincero, quebra o padrão"
+    },
+    {
+      "id": "oficina_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Energia restaurada! Mais uma luz acesa.",
+      "dica": "Tom de notificação"
+    },
+    {
+      "id": "portal_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Esta é a câmara do portal. A alavanca só funciona com as três luzes acesas."
+    },
+    {
+      "id": "portal_gaburia_002",
+      "personagem": "gaburia",
+      "texto": "Travada. Eu não faço as regras... Na verdade, faço sim.",
+      "dica": "Convencida"
+    },
+    {
+      "id": "portal_gaburia_003",
+      "personagem": "gaburia",
+      "texto": "Três luzes acesas! Pode puxar a alavanca, companheiro.",
+      "dica": "Empolgada"
+    },
+    {
+      "id": "portal_gaburia_004",
+      "personagem": "gaburia",
+      "texto": "Portal aberto! Destino: a dimensão de onde você veio. Mais ou menos."
+    },
+    {
+      "id": "portal_gaburia_005",
+      "personagem": "gaburia",
+      "texto": "Pode ir. É seguro. Noventa e nove por cento seguro. Arredondando.",
+      "dica": "Nervosa no fim"
+    },
+    {
+      "id": "portal_gaburia_006",
+      "personagem": "gaburia",
+      "texto": "Foi um prazer, companheiro. Vou mandar uns amigos se despedirem.",
+      "dica": "Emocionada; os hologramas saem do relógio depois"
+    },
+    {
+      "id": "geral_gaburia_001",
+      "personagem": "gaburia",
+      "texto": "Companheiro? Pisca duas vezes se estiver preso num loop infinito."
+    },
+    {
+      "id": "geral_gaburia_002",
+      "personagem": "gaburia",
+      "texto": "Tudo bem, eu espero. Sou um relógio: esperar é literalmente o meu trabalho."
+    },
+    {
+      "id": "geral_gaburia_003",
+      "personagem": "gaburia",
+      "texto": "Dica: as faixas no chão levam às salas que faltam."
+    },
+    {
+      "id": "geral_gaburia_004",
+      "personagem": "gaburia",
+      "texto": "Faltam os três sistemas: navegação, treinamento e energia. Bora?"
+    },
+    {
+      "id": "geral_gaburia_005",
+      "personagem": "gaburia",
+      "texto": "Uma luz acesa! Faltam duas. Você está indo bem."
+    },
+    {
+      "id": "geral_gaburia_006",
+      "personagem": "gaburia",
+      "texto": "Só falta um sistema! Já dá para sentir o cheiro de casa."
+    },
+    {
+      "id": "geral_gaburia_007",
+      "personagem": "gaburia",
+      "texto": "Tudo pronto! Vá para a câmara do portal."
+    },
+    {
+      "id": "geral_gaburia_008",
+      "personagem": "gaburia",
+      "texto": "Missão pausada. Pode voltar quando quiser: eu salvei o progresso. Ctrl+S é meu hobby."
+    },
+    {
+      "id": "geral_gaburia_009",
+      "personagem": "gaburia",
+      "texto": "Missão reiniciada. Às vezes desligar e ligar de novo resolve tudo."
+    },
+    {
+      "id": "geral_gaburia_010",
+      "personagem": "gaburia",
+      "texto": "A arma voltou para o suporte. Ela não gosta de ficar longe de casa."
+    },
+    {
+      "id": "geral_gaburia_011",
+      "personagem": "gaburia",
+      "texto": "Três luzes acesas! O portal está liberado.",
+      "dica": "Empolgada"
+    }
+  ]
+}

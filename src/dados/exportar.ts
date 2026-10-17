@@ -6,7 +6,7 @@
 import { zipSync, unzipSync, strToU8, strFromU8 } from 'fflate';
 import { aplicarVoz, cortar, TAXA } from '../audio/efeitos';
 import { criarWav, lerWav, criarOggOpus, opusDisponivel, criarCurva } from '../audio/arquivos_audio';
-import { assinatura, voz } from '../audio/parametros';
+import { assinatura, voz, type ParametrosVoz } from '../audio/parametros';
 import { armazenamento } from './armazenamento';
 import { SUGERIDOS, sugeridosGenericos } from './presets';
 import {
@@ -161,33 +161,86 @@ export async function importarProjeto(bytes: Uint8Array): Promise<Projeto> {
 
 // ---------- roteiro (falas.json dos padrões Gabura) ----------
 interface FalaRoteiro { id: string; personagem: string; texto: string; emocao?: string; dica?: string; marcante?: boolean; }
-interface PersonagemRoteiro { id: string; nome?: string; cor?: string; }
+interface PresetRoteiro { id?: string; nome: string; descricao?: string; p?: Partial<ParametrosVoz>; }
+interface PersonagemRoteiro {
+  id: string; nome?: string; cor?: string;
+  /** 3 vozes para testar (opcional; sem elas o estúdio usa as sugestões conhecidas ou as genéricas). */
+  sugeridos?: PresetRoteiro[];
+  /** Voz já escolhida em outro projeto (opcional). */
+  voz?: { origem?: string; nome: string; p?: Partial<ParametrosVoz> };
+}
+interface Roteiro { versao_formato?: number; nome?: string; local?: string; falas?: FalaRoteiro[]; personagens?: PersonagemRoteiro[]; }
 
 const CORES = ['#8fd651', '#4fd6d0', '#8a5cf0', '#ff7a6b', '#ffd166', '#b9c2c8', '#f29bd4'];
 
-export function projetoDeRoteiro(texto: string, nomeArquivo: string): Projeto {
-  const d = JSON.parse(texto) as { versao_formato?: number; nome?: string; falas?: FalaRoteiro[]; personagens?: PersonagemRoteiro[] };
+function lerRoteiro(texto: string): Roteiro {
+  const d = JSON.parse(texto) as Roteiro;
   if (!Array.isArray(d.falas) || d.falas.length === 0) throw new Error('O roteiro precisa ter uma lista "falas".');
-  const falas: Fala[] = d.falas.map((f) => ({
+  return d;
+}
+
+function falasDoRoteiro(d: Roteiro): Fala[] {
+  return d.falas!.map((f) => ({
     id: paraId(f.id), personagem: paraId(f.personagem), texto: f.texto ?? '', dica: f.dica ?? '', emocao: f.emocao ?? '',
     tomadas: [], favorita: null, karaoke: null,
   }));
+}
+
+/** Monta um personagem a partir do roteiro (sugestões e voz vindas do arquivo têm prioridade). */
+function personagemDoRoteiro(d: Roteiro, falas: Fala[], id: string, i: number): Personagem {
+  const info = d.personagens?.find((p) => paraId(p.id) === id);
+  const marcante = d.falas!.find((f) => paraId(f.personagem) === id && f.marcante);
+  const sugeridos: Preset[] = info?.sugeridos?.length
+    ? info.sugeridos.map((s, k) => ({ id: s.id ?? `${id}_sugestao_${k + 1}`, nome: s.nome, descricao: s.descricao ?? '', p: voz(s.p ?? {}) }))
+    : structuredClone(SUGERIDOS[id] ?? sugeridosGenericos());
+  return {
+    id,
+    nome: info?.nome ?? id.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase()),
+    cor: info?.cor ?? CORES[i % CORES.length],
+    sugeridos,
+    falaTeste: escolherFalaTeste(falas, id, marcante ? paraId(marcante.id) : undefined),
+    voz: info?.voz ? { origem: info.voz.origem ?? 'roteiro', nome: info.voz.nome, p: voz(info.voz.p ?? {}) } : null,
+  };
+}
+
+export function projetoDeRoteiro(texto: string, nomeArquivo: string): Projeto {
+  const d = lerRoteiro(texto);
+  const falas = falasDoRoteiro(d);
   const ids = [...new Set(falas.map((f) => f.personagem))];
-  const personagens: Personagem[] = ids.map((id, i) => {
-    const info = d.personagens?.find((p) => paraId(p.id) === id);
-    const marcante = d.falas!.find((f) => paraId(f.personagem) === id && f.marcante);
-    return {
-      id,
-      nome: info?.nome ?? id.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase()),
-      cor: info?.cor ?? CORES[i % CORES.length],
-      sugeridos: structuredClone(SUGERIDOS[id] ?? sugeridosGenericos()),
-      falaTeste: escolherFalaTeste(falas, id, marcante ? paraId(marcante.id) : undefined),
-      voz: null,
-    };
-  });
+  const personagens = ids.map((id, i) => personagemDoRoteiro(d, falas, id, i));
   const nome = d.nome ?? nomeArquivo.replace(/\.json$/i, '');
   const agora = Date.now();
-  return { versao_formato: 1, id: paraId(nome) + '_' + agora.toString(36), nome, local: '', criado: agora, alterado: agora, personagens, falas, ajustes: { ...AJUSTES_PADRAO } };
+  return { versao_formato: 1, id: paraId(nome) + '_' + agora.toString(36), nome, local: d.local ?? '', criado: agora, alterado: agora, personagens, falas, ajustes: { ...AJUSTES_PADRAO } };
+}
+
+/**
+ * Junta um roteiro ao projeto aberto: acrescenta as falas e os personagens novos.
+ * Falas que já existem (mesmo id) ficam como estão, com as tomadas gravadas; só o texto e a dica são atualizados.
+ */
+export function mesclarRoteiro(projeto: Projeto, texto: string): { novas: number; atualizadas: number; personagens: number } {
+  const d = lerRoteiro(texto);
+  const falas = falasDoRoteiro(d);
+  let novas = 0, atualizadas = 0, personagens = 0;
+  for (const f of falas) {
+    const existente = projeto.falas.find((x) => x.id === f.id);
+    if (existente) {
+      if (existente.texto !== f.texto) existente.karaoke = null;
+      existente.texto = f.texto; existente.dica = f.dica; existente.emocao = f.emocao;
+      atualizadas++;
+    } else { projeto.falas.push(f); novas++; }
+  }
+  const ids = [...new Set(falas.map((f) => f.personagem))];
+  ids.forEach((id) => {
+    const pers = projeto.personagens.find((p) => p.id === id);
+    if (!pers) {
+      projeto.personagens.push(personagemDoRoteiro(d, projeto.falas, id, projeto.personagens.length));
+      personagens++;
+    } else if (!pers.voz) {
+      const doArquivo = personagemDoRoteiro(d, projeto.falas, id, 0);
+      if (doArquivo.voz) pers.voz = doArquivo.voz;
+    }
+  });
+  return { novas, atualizadas, personagens };
 }
 
 export { MAX_TOMADAS };

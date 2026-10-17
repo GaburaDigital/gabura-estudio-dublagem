@@ -3,7 +3,7 @@
 import { opusDisponivel } from '../audio/arquivos_audio';
 import { armazenamento } from '../dados/armazenamento';
 import {
-  exportarParaJogo, exportarPresets, exportarProjeto, importarPresets, importarProjeto, projetoDeRoteiro,
+  exportarParaJogo, exportarPresets, exportarProjeto, importarPresets, importarProjeto, mesclarRoteiro, projetoDeRoteiro,
 } from '../dados/exportar';
 import { paraId, tomadaFavorita, type Projeto } from '../dados/modelo';
 import { escolherPasta, esquecerPasta, pastaDisponivel, reconectar } from '../dados/pasta';
@@ -128,6 +128,17 @@ function secaoProjetos(): HTMLElement {
   return h('div', { class: 'caixa' },
     h('h3', {}, 'Projetos neste computador'), lista,
     h('div', { class: 'linha-bts' },
+      h('button', {
+        class: 'bt lima', type: 'button', onclick: async () => {
+          const a = await escolherArquivo('.json,application/json');
+          if (!a) return;
+          try {
+            const r = mesclarRoteiro(projeto(), new TextDecoder().decode(a.bytes));
+            mudou();
+            avisar(`Roteiro juntado a "${projeto().nome}": ${r.novas} fala(s) nova(s), ${r.atualizadas} atualizada(s), ${r.personagens} personagem(ns) novo(s). As tomadas gravadas continuam.`, 'ok');
+          } catch (e) { avisar('Roteiro inválido: ' + (e as Error).message, 'erro'); }
+        },
+      }, 'Adicionar falas de um roteiro a este projeto'),
       h('button', {
         class: 'bt', type: 'button', onclick: async () => {
           const a = await escolherArquivo('.json,application/json');

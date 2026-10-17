@@ -124,6 +124,8 @@ Todo push na branch `main` publica no GitHub Pages pela Action `.github/workflow
 | `src/dados/roteiro_nave.ts` | roteiro que já vem carregado (túnel da nave) |
 | `src/dados/exportar.ts` | ZIP do jogo, backup do projeto e troca de vozes |
 
+Para juntar falas novas a um projeto que já tem gravações, use **Exportar → Adicionar falas de um roteiro a este projeto**: as tomadas gravadas continuam e as falas novas entram na lista. O roteiro pode trazer as 3 vozes sugeridas (`sugeridos`) e a voz já escolhida (`voz`) de cada personagem; veja `dados/roteiro_nave_completo.json`.
+
 Para outro jogo, use **Exportar → Novo projeto a partir de um roteiro**, com um `falas.json` no formato de `dados/exemplo_roteiro.json`. A fala com `"marcante": true` vira a frase de teste do personagem; sem ela, o estúdio usa a fala mais longa.
 
 ## Licença
