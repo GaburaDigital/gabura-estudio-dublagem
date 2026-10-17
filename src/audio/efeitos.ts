@@ -8,11 +8,16 @@ import type { ParametrosVoz } from './parametros';
 
 export const TAXA = 48000;
 
-/** Corta a gravação entre início e fim (segundos). */
+/** Corta a gravação entre início e fim (segundos), com esmaecimento curtinho nas pontas para não estalar. */
 export function cortar(x: Float32Array, inicio: number, fim: number, taxa = TAXA): Float32Array {
   const a = Math.max(0, Math.floor(inicio * taxa));
   const b = Math.min(x.length, Math.ceil(fim * taxa));
-  return x.slice(a, Math.max(a, b));
+  const y = x.slice(a, Math.max(a, b));
+  const entrada = Math.min(Math.floor(taxa * 0.005), Math.floor(y.length / 4)); // 5 ms
+  const saida = Math.min(Math.floor(taxa * 0.015), Math.floor(y.length / 4)); // 15 ms
+  for (let i = 0; i < entrada; i++) y[i] *= i / entrada;
+  for (let i = 0; i < saida; i++) y[y.length - 1 - i] *= i / saida;
+  return y;
 }
 
 /** Resposta de sala sintética: ruído que vai sumindo (como bater palma numa sala). */

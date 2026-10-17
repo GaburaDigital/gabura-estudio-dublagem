@@ -11,7 +11,20 @@
     <link rel="apple-touch-icon" href="./icones/icone-192.png" />
   </head>
   <body>
-    <div id="app"><p class="carregando">Carregando o estúdio…</p></div>
+    <div id="app">
+      <p class="carregando">Carregando o estúdio…</p>
+      <p id="aviso-publicacao" hidden style="max-width:560px;margin:0 auto;padding:0 20px;font-family:system-ui,sans-serif;line-height:1.5">
+        O estúdio não abriu. Se este endereço é o GitHub Pages, confira no repositório:
+        <b>Settings → Pages → Source: GitHub Actions</b>. Depois, na aba <b>Actions</b>,
+        rode de novo "Publicar no GitHub Pages".
+      </p>
+    </div>
+    <script>
+      // Se em 6 s o app não substituiu esta tela, mostra a dica de publicação.
+      setTimeout(function () {
+        if (document.querySelector('.carregando')) document.getElementById('aviso-publicacao').hidden = false;
+      }, 6000);
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
